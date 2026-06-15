@@ -11,6 +11,8 @@ import { OpenRedirectComponent } from './open-redirect/open-redirect.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SecureImplementationsComponent } from './secure-implementations/secure-implementations.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardActions, MatCardContent, MatCardHeader, MatCardModule } from "@angular/material/card";
+import { MatIcon } from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardHeader,
+    MatIcon,
+    MatCardModule,
+    MatCardContent,
+    MatCardActions
   ],
   providers: [],
   bootstrap: [AppComponent]
