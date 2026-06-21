@@ -1,8 +1,13 @@
-.cards-grid {
-  display: grid;
 
-  grid-template-columns:
-    repeat(auto-fill, minmax(320px, 1fr));
 
-  gap: 16px;
+textarea {
+  width: 100%;
+  padding: 12px;
+}
+
+.preview {
+  border: 1px solid #ccc;
+  padding: 12px;
+  min-height: 120px;
+  background: #fafafa;
 }

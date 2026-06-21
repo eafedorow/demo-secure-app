@@ -1,0 +1,226 @@
+<mat-card>
+  <mat-card-content>
+    <div>
+      <h1>🔴 Cross-Site Scripting (XSS)</h1>
+      <p>
+        XSS позволяет злоумышленнику выполнить JavaScript-код
+        в браузере другого пользователя.
+      </p>
+
+      <p>
+        Это одна из самых распространённых веб-уязвимостей,
+        которая может привести к краже токенов, данных пользователя
+        и захвату сессии.
+      </p>
+    </div>
+
+    <div class="risk-badge">
+      HIGH RISK
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
+<!-- Как работает -->
+<mat-card class="section-card">
+  <mat-card-content>
+    <h2>🧠 Как работает атака</h2>
+
+    <div class="attack-flow">
+
+      <div class="step">
+        <div class="emoji">👨‍💻</div>
+        <h3>Атакующий</h3>
+        <p>Вводит вредоносный код</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="step">
+        <div class="emoji">🌐</div>
+        <h3>Сайт</h3>
+        <p>Сохраняет сообщение</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="step">
+        <div class="emoji">👤</div>
+        <h3>Пользователь</h3>
+        <p>Открывает страницу</p>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="step danger">
+        <div class="emoji">💥</div>
+        <h3>XSS</h3>
+        <p>Код выполняется</p>
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Playground -->
+<mat-card class="section-card">
+
+  <mat-card-content>
+    <div class="demo-section">
+
+      <h2>🔬 Как Angular обрабатывает пользовательский ввод</h2>
+
+      <div class="flow">
+
+        <!-- STEP 1 -->
+        <mat-card class="flow-card raw">
+
+          <div class="step">
+            STEP 1
+          </div>
+
+          <h3>🟥 Пользовательский ввод (Raw Payload)</h3>
+
+          <p>
+            Что ввёл пользователь или злоумышленник.
+          </p>
+
+          <pre>{{ message }}</pre>
+
+        </mat-card>
+
+        <!-- ARROW -->
+        <div class="arrow">
+          ➜
+        </div>
+
+        <!-- STEP 2 -->
+        <mat-card class="flow-card sanitized">
+
+          <div class="step">
+            STEP 2
+          </div>
+
+          <h3>🟨 После Angular Sanitizer</h3>
+
+          <p>
+            Angular удаляет опасные конструкции.
+          </p>
+
+          <pre>{{ sanitized }}</pre>
+
+        </mat-card>
+
+        <!-- ARROW -->
+        <div class="arrow">
+          ➜
+        </div>
+
+        <!-- STEP 3 -->
+        <mat-card
+          class="flow-card"
+          [ngClass]="safeMode ? 'safe' : 'danger'"
+        >
+
+          <div class="step">
+            STEP 3
+          </div>
+
+          <h3>
+            {{ safeMode
+            ? '🟢 Safe Rendering'
+            : '🔴 Unsafe Rendering' }}
+          </h3>
+
+          <p *ngIf="safeMode">
+            Angular использует Sanitizer и удаляет опасный код.
+          </p>
+
+          <p *ngIf="!safeMode">
+            Разработчик отключил защиту через
+            bypassSecurityTrustHtml().
+          </p>
+
+          <div class="render-box">
+
+            <div [innerHTML]="rendered"></div>
+
+          </div>
+
+        </mat-card>
+
+      </div>
+
+    </div>
+
+  </mat-card-content>
+
+</mat-card>
+
+<!-- Последствия -->
+
+<mat-card class="section-card">
+  <mat-card-content>
+    <h2>💣 Что может сделать злоумышленник</h2>
+
+    <div class="impact-grid">
+
+      <mat-card class="impact-card">
+        🍪
+        <h3>Кража Cookies</h3>
+      </mat-card>
+
+      <mat-card class="impact-card">
+        🔑
+        <h3>Кража JWT</h3>
+      </mat-card>
+
+      <mat-card class="impact-card">
+        🎭
+        <h3>Подмена интерфейса</h3>
+      </mat-card>
+
+      <mat-card class="impact-card">
+        📧
+        <h3>Кража данных</h3>
+      </mat-card>
+
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Angular -->
+
+<mat-card class="section-card">
+  <mat-card-content>
+    <h2>🛡️ Как Angular защищает от XSS</h2>
+
+    <ul>
+      <li>Интерполяция автоматически экранирует HTML</li>
+      <li>Angular Sanitizer очищает опасные данные</li>
+      <li>Шаблоны защищены от прямого выполнения JS</li>
+      <li>Опасность появляется при использовании innerHTML</li>
+    </ul>
+  </mat-card-content>
+
+</mat-card>
+
+<!-- Ошибки -->
+
+<mat-card class="section-card danger-zone">
+  <mat-card-content>
+    <h2>🚫 Частые ошибки разработчиков</h2>
+
+    <div class="code-block">
+      [innerHTML]="userInput"
+    </div>
+
+    <div class="code-block">
+      sanitizer.bypassSecurityTrustHtml(...)
+    </div>
+
+    <div class="code-block">
+      elementRef.nativeElement.innerHTML = ...
+    </div>
+  </mat-card-content>
+</mat-card>

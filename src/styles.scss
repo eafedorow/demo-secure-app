@@ -2,3 +2,19 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.layout {
+  height: 100dvh;
+}
+
+.content {
+  height: 100%;
+}
+
+.page {
+  padding: 24px;
+}
+
+.risk-badge {
+  width: max-content;
+}
