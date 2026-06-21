@@ -1,1 +1,214 @@
-<p>open-redirect works!</p>
+<mat-card>
+  <mat-card-content>
+
+    <h1>🔓 Open Redirect</h1>
+
+    <!-- 🧠 WHAT IS IT -->
+    <section class="panel info">
+
+      <h2>📚 Что это за уязвимость?</h2>
+
+      <p>
+        Open Redirect возникает, когда приложение перенаправляет пользователя
+        на URL, который передаётся извне (query params, state, backend).
+      </p>
+
+      <p>
+        👉 Если URL не валидируется — злоумышленник может отправить пользователя
+        на любой сайт.
+      </p>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🎯 DEMO FLOW -->
+    <section class="panel">
+
+      <h2>🎯 Как это работает</h2>
+
+      <ol>
+        <li>Пользователь нажимает “Login”</li>
+        <li>Приложение читает параметр <code>redirect</code></li>
+        <li>И делает <code>window.location.href = redirect</code></li>
+        <li>Без проверки домена</li>
+      </ol>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 💥 ATTACK SIMULATOR -->
+    <section class="panel danger">
+
+      <h2>💥 Симуляция Open Redirect</h2>
+
+      <p>
+        Здесь показано 2 подхода: <b>опасный (unsafe)</b> и <b>безопасный (safe)</b>.
+      </p>
+
+      <mat-divider></mat-divider>
+
+      <!-- ❌ UNSAFE -->
+      <div class="flow-block">
+
+        <h3>❌ Unsafe redirect</h3>
+
+        <!-- 1. BUTTON -->
+        <button mat-raised-button color="warn"
+                (click)="redirectUnsafe()">
+          🚀 Выполнить unsafe redirect
+        </button>
+
+        <!-- 2. CODE -->
+        <div class="code-box">
+          <p><b>Код:</b></p>
+
+          <pre>
+window.location.href = redirectUrl;
+      </pre>
+        </div>
+
+        <!-- 3. EXPLANATION -->
+        <div class="explanation">
+
+          <p>
+            ⚠️ Приложение <b>полностью доверяет пользовательскому вводу</b>.
+          </p>
+
+          <p>
+            Это означает, что злоумышленник может передать:
+          </p>
+
+          <code>https://evil-site.com</code>
+
+          <p>
+            👉 Пользователь будет перенаправлен на внешний ресурс без предупреждения.
+          </p>
+
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- ✅ SAFE -->
+      <div class="flow-block">
+
+        <h3>🛡 Safe redirect</h3>
+
+        <!-- 1. BUTTON -->
+        <button mat-raised-button color="primary"
+                (click)="redirectSafe()">
+          🛡 Выполнить safe redirect
+        </button>
+
+        <!-- 2. CODE -->
+        <div class="code-box">
+          <p><b>Код:</b></p>
+
+          <pre>
+              `const allowed = ['/dashboard', '/main'];
+
+              const isValid = allowed.some(path =>
+                redirectUrl.startsWith(path)
+              );
+
+              if (isValid) window.location.href = redirectUrl;
+          </pre>
+        </div>
+
+        <!-- 3. EXPLANATION -->
+        <div class="explanation">
+
+          <p>
+            🛡 Здесь добавлена <b>валидация redirect URL</b>.
+          </p>
+
+          <p>
+            Разрешены только внутренние маршруты приложения.
+          </p>
+
+          <p>
+            👉 Любая попытка перейти на внешний домен блокируется.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🧪 LIVE EXPLANATION -->
+    <section class="panel">
+
+      <h2>🧪 Что происходит внутри</h2>
+
+      <div class="box">
+
+        <p><b>Current URL:</b></p>
+        <pre>{{ redirectUrl }}</pre>
+
+        <p><b>Behavior:</b></p>
+
+        <p *ngIf="mode === 'unsafe'">
+          🔴 Приложение доверяет внешнему URL → происходит redirect
+        </p>
+
+        <p *ngIf="mode === 'safe'">
+          🟢 URL проверяется → разрешены только внутренние маршруты
+        </p>
+
+      </div>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 💣 REAL CASES -->
+    <section class="panel warning">
+
+      <h2>💡 Реальные кейсы атак</h2>
+
+      <ul>
+        <li>🎣 Фишинг через доверенный домен</li>
+        <li>🔐 Перенаправление после логина на вредоносный сайт</li>
+        <li>📧 Email ссылки с подменой redirect</li>
+        <li>💳 Подделка платежных страниц</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🛡 HOW TO FIX -->
+    <section class="panel safe">
+
+      <h2>🛡️ Как защититься</h2>
+
+      <ul>
+        <li>✔ Разрешать только internal routes</li>
+        <li>✔ Использовать whitelist доменов</li>
+        <li>✔ Проверять URL через parser</li>
+        <li>✔ Не использовать window.location напрямую</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 📜 LOGS -->
+    <section class="panel">
+
+      <h2>📜 Security log</h2>
+
+      <div *ngFor="let log of logs">
+        {{ log }}
+      </div>
+
+    </section>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,168 @@
+<mat-card>
+  <mat-card-content>
+    <h1>🔐 Broken Access Control</h1>
+
+    <!-- 🧠 INTRO -->
+    <section class="panel info">
+
+      <h2>📚 Что это за уязвимость?</h2>
+
+      <p>
+        Broken Access Control возникает, когда приложение
+        <b>показывает или скрывает данные только на уровне UI</b>,
+        но не проверяет доступ на уровне логики или backend.
+      </p>
+
+      <p>
+        👉 Это значит: пользователь может получить доступ к данным,
+        даже если интерфейс это “запрещает”.
+      </p>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🎭 ROLE CONTROL -->
+    <section class="panel">
+
+      <h2>🎭 Контекст пользователя</h2>
+
+      <p>
+        Сейчас мы симулируем роли пользователей в системе.
+      </p>
+
+      <h3>Текущая роль: <b>{{ role }}</b></h3>
+
+      <button mat-raised-button (click)="setRole('user')">
+        👤 USER
+      </button>
+
+      <button mat-raised-button color="warn"
+              (click)="setRole('admin')">
+        🛡 ADMIN
+      </button>
+
+      <button mat-stroked-button (click)="simulateAttack()">
+        💥 Simulate attack (DevTools / URL bypass)
+      </button>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🧠 ATTACK EXPLANATION -->
+    <section class="panel warning">
+
+      <h2>⚠️ Как происходит атака</h2>
+
+      <ol>
+        <li>Пользователь заходит в систему как обычный USER</li>
+        <li>UI скрывает админ-кнопки через *ngIf</li>
+        <li>Но данные уже загружены в frontend</li>
+        <li>Пользователь меняет роль в DevTools или URL</li>
+        <li>И получает доступ к запрещённым данным</li>
+      </ol>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🧑 USER DASHBOARD -->
+    <section class="panel">
+
+      <h2>🧑 User Dashboard</h2>
+
+      <p>
+        ⚠️ Важно: UI НЕ является механизмом безопасности.
+      </p>
+
+      <table>
+        <tr>
+          <th>User</th>
+          <th>Salary</th>
+          <th>Action</th>
+        </tr>
+
+        <tr *ngFor="let u of users">
+          <td>{{ u.name }}</td>
+          <td>{{ u.salary }}</td>
+
+          <td>
+            <span *ngIf="role !== 'admin'">
+              🔒 Hidden by UI (NOT secure)
+            </span>
+
+            <button *ngIf="role === 'admin'"
+                    mat-button color="warn"
+                    (click)="deleteUser(u.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </table>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🛡 ATTACK RESULT -->
+    <section class="panel danger">
+
+      <h2>🛡️ ADMIN DATA (EXPOSED)</h2>
+
+      <p>
+        ⚠️ Эти данные должны быть защищены backend-ом,
+        а не UI.
+      </p>
+
+      <pre>{{ users | json }}</pre>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 💡 REAL CASES -->
+    <section class="panel info">
+
+      <h2>💡 Реальные кейсы из продакшена</h2>
+
+      <ul>
+        <li>👀 Пользователь меняет ID в URL → получает чужие данные (IDOR)</li>
+        <li>🧑‍💻 Открывает /admin напрямую без проверки</li>
+        <li>🔓 API возвращает данные без проверки роли</li>
+        <li>🧾 Frontend скрывает кнопку, но endpoint доступен</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🛡 HOW TO FIX -->
+    <section class="panel safe">
+
+      <h2>🛡️ Как защищаться</h2>
+
+      <ul>
+        <li>✔ Проверять доступ на backend (обязательно)</li>
+        <li>✔ Использовать RBAC/ABAC на сервере</li>
+        <li>✔ Никогда не доверять UI</li>
+        <li>✔ Валидировать каждый запрос</li>
+        <li>✔ Защищать API, а не кнопки</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 📜 LOGS -->
+    <section class="panel">
+
+      <h2>📜 Attack log</h2>
+
+      <div *ngFor="let log of logs">
+        {{ log }}
+      </div>
+
+    </section>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,21 @@
+.panel {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.info { border-left: 5px solid #3b82f6; }
+.warning { border-left: 5px solid #f59e0b; }
+.danger { border-left: 5px solid #ef4444; }
+.safe { border-left: 5px solid #22c55e; }
+
+.box {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.danger-box {
+  border: 1px solid #e5e7eb;
+}

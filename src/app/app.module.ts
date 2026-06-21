@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { XssComponent } from './pages/xss/xss.component';
 import { DomXssComponent } from './pages/dom-xss/dom-xss.component';
-import { TokenComponent } from './pages/token/token.component';
+import { JwtStorageComponent } from './pages/jwt-storage/jwt-storage.component';
 import { OpenRedirectComponent } from './pages/open-redirect/open-redirect.component';
-import { FileUploadComponent } from './pages/file-upload/file-upload.component';
-import { SecureImplementationsComponent } from './pages/secure-implementations/secure-implementations.component';
+import { BrokenAccessControlComponent } from './pages/broken-access-control/broken-access-control.component';
+import { InsecureFileUploadComponent } from './pages/insecure-file-upload/insecure-file-upload.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardActions, MatCardContent, MatCardHeader, MatCardModule } from "@angular/material/card";
 import { MatIcon } from "@angular/material/icon";
@@ -29,6 +29,10 @@ import {
 import {MatFormField, MatInputModule, MatLabel} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatButtonModule} from "@angular/material/button";
+import {SecurityMisconfigurationComponent} from "./pages/security-misconfiguration/security-misconfiguration.component";
+import {ChecklistComponent} from "./pages/checklist/checklist.component";
+import {MatCheckbox} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -36,12 +40,14 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     LoginComponent,
     XssComponent,
     DomXssComponent,
-    TokenComponent,
+    JwtStorageComponent,
     OpenRedirectComponent,
-    FileUploadComponent,
-    SecureImplementationsComponent,
+    BrokenAccessControlComponent,
+    InsecureFileUploadComponent,
     MainComponent,
-    SidebarComponent
+    SidebarComponent,
+    SecurityMisconfigurationComponent,
+    ChecklistComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +74,9 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     MatDrawerContainer,
     MatLabel,
     MatFormField,
-    MatSlideToggle
+    MatSlideToggle,
+    MatButtonModule,
+    MatCheckbox
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,143 @@
-<p>dom-xss works!</p>
+<mat-card>
+  <mat-card-content>
+    <!-- 🧠 INTRO -->
+    <h1>🧠 DOM XSS (Document Object Model XSS)</h1>
+
+    <section class="intro">
+
+      <p>
+        DOM XSS — это уязвимость, при которой вредоносный код
+        попадает в <b>DOM напрямую через JavaScript</b>,
+        без участия сервера.
+      </p>
+
+      <h3>📌 Примеры источников:</h3>
+
+      <ul>
+        <li>location.hash</li>
+        <li>location.search</li>
+        <li>localStorage</li>
+        <li>user input формы</li>
+      </ul>
+
+      <h3>⚠️ Пример опасного кода:</h3>
+
+      <pre>
+document.body.innerHTML = location.hash;
+    </pre>
+
+    </section>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+
+    <!-- 🧪 DEMO -->
+    <section class="demo">
+
+      <h2>🧪 Демонстрация DOM XSS</h2>
+
+      <button mat-stroked-button (click)="toggleMode()">
+        Switch mode ({{ mode }})
+      </button>
+
+      <button mat-raised-button color="warn"
+              (click)="setAttackExample()">
+        💣 Load attack payload
+      </button>
+
+      <div class="grid">
+
+        <!-- INPUT -->
+        <div class="panel">
+
+          <h3>✍️ Input</h3>
+
+          <textarea
+            [(ngModel)]="input"
+            rows="6"
+            placeholder="Enter HTML payload">
+        </textarea>
+
+          <button mat-button (click)="render()">
+            Render
+          </button>
+
+        </div>
+
+        <!-- UNSAFE -->
+        <div class="panel danger">
+
+          <h3>🔴 Unsafe DOM rendering</h3>
+
+          <div class="box">
+            <div [innerHTML]="unsafeOutput"></div>
+          </div>
+
+        </div>
+
+        <!-- SAFE -->
+        <div class="panel safe">
+
+          <h3>🟢 Safe output (sanitized)</h3>
+
+          <div class="box">
+            {{ safeOutput }}
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <!-- 📚 EXPLANATION -->
+    <section class="info">
+
+      <h2>📚 Как работает DOM XSS</h2>
+
+      <p>
+        В отличие от обычного XSS, здесь сервер вообще не участвует.
+        Уязвимость появляется из-за неправильной работы с DOM API.
+      </p>
+
+      <h3>💥 Как атакует злоумышленник:</h3>
+
+      <ol>
+        <li>Передаёт payload через URL / input</li>
+        <li>JS код вставляет его в DOM</li>
+        <li>Браузер исполняет его как HTML/JS</li>
+      </ol>
+
+      <h3>🛡️ Как защититься:</h3>
+
+      <ul>
+        <li>Не использовать innerHTML с user input</li>
+        <li>Использовать Angular sanitizer</li>
+        <li>Использовать textContent вместо HTML</li>
+        <li>Фильтровать location.hash / search</li>
+      </ul>
+
+    </section>
+  </mat-card-content>
+
+  <mat-card-content>
+    <!-- 📜 LOGS -->
+    <section class="logs">
+
+      <h3>📜 Execution log</h3>
+
+      <mat-list>
+        <mat-list-item *ngFor="let log of logs">
+          {{ log }}
+        </mat-list-item>
+      </mat-list>
+
+    </section>
+  </mat-card-content>
+
+</mat-card>

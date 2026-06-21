@@ -1,0 +1,94 @@
+<mat-card>
+  <mat-card-content>
+
+    <h1>⚙️ Security Misconfiguration</h1>
+
+    <p>
+      Это класс уязвимостей, связанных с неправильными настройками приложения.
+    </p>
+
+    <mat-divider></mat-divider>
+
+    <!-- CONTROL PANEL -->
+    <section class="panel column">
+
+      <h2>🎛 Environment Controls (DEV vs PROD)</h2>
+
+      <mat-slide-toggle [(ngModel)]="debugMode">
+        🐞 Debug mode
+      </mat-slide-toggle>
+
+      <mat-slide-toggle [(ngModel)]="verboseErrors">
+        ⚠️ Verbose errors
+      </mat-slide-toggle>
+
+      <mat-slide-toggle [(ngModel)]="exposeHeaders">
+        📡 Expose server headers
+      </mat-slide-toggle>
+
+      <button mat-raised-button color="primary"
+              (click)="simulateRequest()">
+        🚀 Send request
+      </button>
+
+      <button mat-stroked-button color="warn"
+              (click)="toggleAll()">
+        💣 Enable "bad prod config"
+      </button>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- RESPONSE -->
+    <section class="panel">
+
+      <h2>📦 API Response</h2>
+
+      <pre>{{ apiResponse | json }}</pre>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- HEADERS -->
+    <section class="panel">
+
+      <h2>📡 Response Headers</h2>
+
+      <pre>{{ getHeaders() | json }}</pre>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- EXPLANATION -->
+    <section class="panel info">
+
+      <h2>🧠 Почему это проблема?</h2>
+
+      <ul>
+        <li>🐞 debug mode может раскрывать внутренние ошибки</li>
+        <li>⚠️ stack traces дают структуру backend</li>
+        <li>📡 headers могут раскрывать технологии</li>
+        <li>🔓 dev endpoints иногда остаются в prod</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- LOGS -->
+    <section class="panel">
+
+      <h2>📜 Logs</h2>
+
+      <div *ngFor="let log of logs">
+        {{ log }}
+      </div>
+
+    </section>
+
+  </mat-card-content>
+
+</mat-card>

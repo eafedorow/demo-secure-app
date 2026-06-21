@@ -1,0 +1,153 @@
+<mat-card>
+  <mat-card-content>
+
+    <h1>🔐 JWT Storage & Authentication Risks</h1>
+
+    <!-- 🧠 WHAT IS IT -->
+    <section class="panel info">
+
+      <h2>📚 Что это за проблема?</h2>
+
+      <p>
+        JWT (JSON Web Token) часто используется для авторизации пользователей.
+      </p>
+
+      <p>
+        Проблема возникает не в самом JWT, а в том, <b>где и как он хранится на фронтенде</b>.
+      </p>
+
+      <p>
+        👉 Если токен хранится в <b>localStorage</b> или <b>sessionStorage</b>,
+        он становится доступен для JavaScript-кода.
+      </p>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- ⚠️ STORAGE DEMO -->
+    <section class="panel">
+
+      <h2>💾 Где хранится JWT сейчас</h2>
+
+      <p>
+        Выберите способ хранения токена:
+      </p>
+
+      <button mat-raised-button color="primary"
+              (click)="setStorage('localStorage')">
+        localStorage
+      </button>
+
+      <button mat-raised-button color="accent"
+              (click)="setStorage('sessionStorage')">
+        sessionStorage
+      </button>
+
+      <button mat-raised-button color="warn"
+              (click)="setStorage('memory')">
+        in-memory (safe)
+      </button>
+
+      <div class="box">
+        <p><b>Current mode:</b> {{ storageMode }}</p>
+      </div>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🔐 TOKEN DEMO -->
+    <section class="panel">
+
+      <h2>🔑 JWT Token Simulation</h2>
+
+      <p>
+        При логине токен сохраняется в выбранное хранилище.
+      </p>
+
+      <button mat-raised-button (click)="login()">
+        Login (generate token)
+      </button>
+
+      <button mat-stroked-button color="warn"
+              (click)="simulateXSS()">
+        💥 Simulate XSS attack
+      </button>
+
+      <div class="box">
+        <p><b>Stored token:</b></p>
+        <pre>{{ token }}</pre>
+      </div>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 💥 ATTACK -->
+    <section class="panel danger">
+
+      <h2>💥 Как происходит атака</h2>
+
+      <ol>
+        <li>Токен хранится в localStorage</li>
+        <li>В приложение попадает XSS</li>
+        <li>Злоумышленник выполняет: <code>localStorage.getItem('token')</code></li>
+        <li>Токен отправляется на внешний сервер</li>
+      </ol>
+
+      <div class="box danger-box">
+        <p><b>Simulated stolen token:</b></p>
+        <pre>{{ stolenToken || '— no attack yet —' }}</pre>
+      </div>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🧑 REAL CASES -->
+    <section class="panel warning">
+
+      <h2>💡 Реальные кейсы</h2>
+
+      <ul>
+        <li>👀 XSS → кража токена из localStorage</li>
+        <li>🔁 Refresh token перехватывается при отсутствии httpOnly cookie</li>
+        <li>🧾 SPA сохраняет access token навсегда</li>
+        <li>🌐 Токен доступен через DevTools в любой момент</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🛡 HOW TO FIX -->
+    <section class="panel safe">
+
+      <h2>🛡️ Как правильно делать</h2>
+
+      <ul>
+        <li>✔ Использовать httpOnly cookies для refresh token</li>
+        <li>✔ Access token хранить в memory (не persistent storage)</li>
+        <li>✔ Делать короткий TTL токенов</li>
+        <li>✔ Использовать refresh rotation</li>
+        <li>✔ Минимизировать XSS поверхность</li>
+      </ul>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- 📜 LOGS -->
+    <section class="panel">
+
+      <h2>📜 Security log</h2>
+
+      <div *ngFor="let log of logs">
+        {{ log }}
+      </div>
+
+    </section>
+
+  </mat-card-content>
+</mat-card>

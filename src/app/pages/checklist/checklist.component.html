@@ -1,0 +1,108 @@
+<mat-card>
+
+  <mat-card-content>
+
+    <h1>📋 Security Checklist перед релизом</h1>
+
+    <p>
+      Практический чеклист для проверки frontend перед production.
+      Покрывает XSS, Auth, Storage, Routing и CSP.
+    </p>
+
+    <mat-divider></mat-divider>
+
+    <!-- SCORE -->
+    <section class="score">
+
+      <h2>🧠 Risk completion score</h2>
+
+      <div class="score-box">
+        {{ score }}%
+      </div>
+
+      <p>
+        Чем выше процент — тем безопаснее релиз.
+      </p>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- XSS -->
+    <section>
+      <h2>🚨 XSS Protection</h2>
+
+      <mat-checkbox *ngFor="let item of checklist['xss']"
+                    [(ngModel)]="item.done">
+        {{ item.label }}
+      </mat-checkbox>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- AUTH -->
+    <section>
+      <h2>🔐 Authentication</h2>
+
+      <mat-checkbox *ngFor="let item of checklist['auth']"
+                    [(ngModel)]="item.done">
+        {{ item.label }}
+      </mat-checkbox>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- STORAGE -->
+    <section>
+      <h2>💾 Storage security</h2>
+
+      <mat-checkbox *ngFor="let item of checklist['storage']"
+                    [(ngModel)]="item.done">
+        {{ item.label }}
+      </mat-checkbox>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- ROUTING -->
+    <section>
+      <h2>🧭 Routing & Access</h2>
+
+      <mat-checkbox *ngFor="let item of checklist['routing']"
+                    [(ngModel)]="item.done">
+        {{ item.label }}
+      </mat-checkbox>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- CSP -->
+    <section>
+      <h2>🛡 Content Security Policy</h2>
+
+      <mat-checkbox *ngFor="let item of checklist['csp']"
+                    [(ngModel)]="item.done">
+        {{ item.label }}
+      </mat-checkbox>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- FINAL MESSAGE -->
+    <section class="final">
+
+      <h2>🚀 Ready for production?</h2>
+
+      <p *ngIf="score < 100">
+        ⚠️ Есть небезопасные зоны — не деплой в прод.
+      </p>
+
+      <p *ngIf="score === 100">
+        🟢 Все проверки пройдены — можно релизить.
+      </p>
+
+    </section>
+
+  </mat-card-content>
+
+</mat-card>

@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-content>
+    <h1>
+      Angular Security Demo App
+    </h1>
+
+    <p>
+      Демонстрация распространённых
+      frontend-уязвимостей и способов
+      их устранения.
+    </p>
+
+  </mat-card-content>
+</mat-card>
+
+<div class="page">
+  <div class="cards-grid">
+    @for (theme of filteredThemes; track theme.id) {
+      <mat-card class="demo-card" [ngClass]="theme.severity" (click)="themesService.navigate(theme)">
+        <div class="card-header">
+          <div class="icon-wrapper">
+            <mat-icon>{{ theme.icon }}</mat-icon>
+          </div>
+
+          <div class="title-block">
+            <div class="title">
+              {{ theme.title }}
+            </div>
+
+            <div class="subtitle">
+              {{ theme.description }}
+            </div>
+          </div>
+
+          <span class="badge" [ngClass]="theme.severity">
+            @switch (theme.severity) {
+              @case ('high') { 🔴 Высокий риск }
+              @case ('medium') { 🟠 Средний риск }
+              @case ('low') { 🟢 Низкий риск }
+              @default { 🔵 Информация }
+            }
+          </span>
+        </div>
+      </mat-card>
+    }
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="sidebar-header">
+  🔐 Security Demo App
+  <div class="subtitle">OWASP Playground</div>
+</div>
+
+<mat-nav-list>
+  @for (theme of themesService.themes; track theme.id) {
+    <a class="sidebar-link" mat-list-item [routerLink]="theme.route" routerLinkActive="active">
+      <mat-icon>{{ theme.icon }}</mat-icon>
+      {{ theme.title }}
+    </a>
+  }
+</mat-nav-list>
